@@ -83,7 +83,7 @@ node src/server.js
 Create a `.env` file in the project root:
 
 ```env
-PORT=5100
+PORT=5000
 MONGO_URI=your_mongodb_atlas_connection_string
 MQTT_BROKER_URL=mqtt://broker.hivemq.com
 ```
@@ -122,13 +122,13 @@ MQTT_BROKER_URL=mqtt://broker.hivemq.com
 ## 🌐 Endpoints Checks
 ### Base URL
 ```Bash 
-http://localhost:5100
+http://localhost:5000
 ```
 ### GET/
 request
 ```bash 
-GET http://localhost:5100/
-GET http://localhost:5100/api/sensor/sensor-01/latest
+GET http://localhost:5000/
+GET http://localhost:5000/api/sensor/sensor-01/latest
 
 ```
 
