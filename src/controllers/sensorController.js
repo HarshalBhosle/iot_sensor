@@ -1,41 +1,33 @@
-const SensorReading = require("../models/sensorReading");
+const SensorReading = require("../models/SensorReading");
 
 // POST /api/sensor/ingest
-exports.ingestSensorData = async (req, res) => {
+exports.ingestSensorData = async (req, res, next) => {
   try {
     const { deviceId, temperature, deviceTimestamp } = req.body;
 
-    // Validation
-    if (!deviceId || temperature === undefined) {
-      return res.status(400).json({
-        message: "deviceId and temperature are required",
-      });
-    }
-
-    const reading = new SensorReading({
+    const reading = await SensorReading.create({
       deviceId,
       temperature,
-      deviceTimestamp: timestamp || Date.now(),
+      deviceTimestamp: deviceTimestamp || Date.now(),
     });
-
-    await reading.save();
 
     res.status(201).json({
       message: "Sensor data ingested successfully",
       data: reading,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
 // GET /api/sensor/:deviceId/latest
-exports.getLatestReading = async (req, res) => {
+exports.getLatestReading = async (req, res, next) => {
   try {
     const { deviceId } = req.params;
 
-    const latestReading = await SensorReading.findOne({ deviceId })
-      .sort({ timestamp: -1 });
+    const latestReading = await SensorReading
+      .findOne({ deviceId })
+      .sort({ deviceTimestamp: -1 });
 
     if (!latestReading) {
       return res.status(404).json({
@@ -45,6 +37,6 @@ exports.getLatestReading = async (req, res) => {
 
     res.status(200).json(latestReading);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
