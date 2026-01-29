@@ -178,3 +178,54 @@ http://localhost:5000/api/sensor/:deviceId/latest
   "updatedAt": "..."
 }
 ```
+---
+## Postman Examples
+```bash
+GET http://localhost:5100/
+```
+response:
+```bash
+IoT Sensor API is running
+```
+---
+
+```bash
+POST http://localhost:5100/api/sensor/ingest
+```
+body
+```bash
+{
+  "temperature": 50,
+  "deviceId": "sensor-04"
+}
+```
+response:
+```bash
+{
+    "message": "Sensor data ingested successfully",
+    "data": {
+        "deviceId": "sensor-04",
+        "temperature": 50,
+        "deviceTimestamp": 1769713543165,
+        "createdAt": "2026-01-29T19:05:43.175Z",
+        "updatedAt": "2026-01-29T19:05:43.175Z",
+        "id": "697baf874ed98aa835714562"
+    }
+}
+```
+---
+```bash
+GET http://localhost:5100/api/sensor/sensor-98/latest
+```
+response:
+```bash
+{
+    "deviceId": "sensor-98",
+    "temperature": 44,
+    "deviceTimestamp": 1769713578920,
+    "createdAt": "2026-01-29T19:06:18.921Z",
+    "updatedAt": "2026-01-29T19:06:18.921Z",
+    "id": "697bafaa4ed98aa835714566"
+}
+```
+
