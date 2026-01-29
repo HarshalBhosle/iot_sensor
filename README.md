@@ -30,7 +30,7 @@ npm install --save-dev nodemon
 
 ## 🛠️ Tech Stack
 
-- **Node.js** (CommonJS)
+- **Node.js 18+/20 lts** (CommonJS)
 - **Express.js**
 - **MongoDB Atlas**
 - **Mongoose**
