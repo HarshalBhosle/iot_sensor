@@ -17,7 +17,7 @@ This project was built as part of a **Node.js Internship Pre-Assessment Assignme
 
 ---
 
-## Installation
+## ⬇️ Installation
 
 create a folder with the name and then on cmd of code editor initialize node and install the required dependencies of [node](https://nodejs.org/en).
 
@@ -68,7 +68,7 @@ src/
 
 
 ---
-## Running the Backend
+## 🛠️ Running the Backend
 
 ```bash
 npm run dev
@@ -89,7 +89,7 @@ MQTT_BROKER_URL=mqtt://broker.hivemq.com
 ```
 ---
 
-## MQTT setup
+## 🤖 MQTT setup
 - Install [mqtt explorer](https://github.com/thomasnordquist/MQTT-Explorer/releases/download/v0.4.0-beta.6/MQTT-Explorer-Setup-0.4.0-beta.6.exe).
 - Open mqtt explorer and Create a new connection
 - Click + Add connection
@@ -119,7 +119,7 @@ MQTT_BROKER_URL=mqtt://broker.hivemq.com
 
 ---
 
-## Endpoints Checks
+## 🌐 Endpoints Checks
 ### Base URL
 ```Bash 
 http://localhost:5100
