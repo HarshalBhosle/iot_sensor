@@ -1,21 +1,10 @@
-# IoT Sensor Backend Service 🌡️
+# IoT Sensor Backend Service 
 
 A Node.js backend service that ingests IoT sensor temperature readings, stores them in MongoDB Atlas, and exposes REST APIs to retrieve the latest reading for a device.
 
 This project was built as part of a **Node.js Internship Pre-Assessment Assignment**.
 
----
 
-## 🚀 Features
-
-- Ingest IoT sensor temperature readings via REST API
-- Store sensor data in MongoDB Atlas using Mongoose
-- Fetch the latest reading for a device
-- Automatic timestamp handling (device + server time)
-- Clean MVC-based backend architecture
-- Bonus: MQTT data ingestion using a public broker
-
----
 
 ## ⬇️ Installation
 
@@ -42,28 +31,52 @@ npm install --save-dev nodemon
 ## 📁 Project Structure
 
 ```bash
-src/
-├── app.js
-├── server.js
+iot_sensor/
 │
-├── config/
-│ └── db.js
+├── src/
+│   │
+│   ├── server.js              # Entry 
+│   ├── app.js                 # Express 
+│   │
+│   ├── config/
+│   │   ├── db.js              # MongoDB 
+│   │   ├── mqtt.js            # MQTT 
+│   │
+│   ├── models/
+│   │   └── SensorReading.js   # Mongoose 
+│   │
+│   ├── controllers/
+│   │   └── sensorController.js
+│   │
+│   ├── routes/
+│   │   └── sensorRoutes.js
+│   │
+│   ├── middlewares/
+│   │   ├── validateSensorData.js
+│   │   └── errorHandler.js
+│   │
+│   ├── services/
+│   │   └── sensorService.js   # DB logic 
+│   │
+│   ├── mqtt/
+│   │   └── mqttSubscriber.js  # MQTT 
+│   │
+│   ├── utils/
+│   │   └── logger.js
+│   │
+│   └── constants/
+│       └── topics.js
 │
-├── models/
-│ └── SensorReading.js
+├── tests/
+│   └── sensor.test.js
 │
-├── controllers/
-│ └── sensorController.js
-│
-├── routes/
-│ └── sensorRoutes.js
-│
-├── middlewares/
-│ ├── validateSensorData.js
-│ └── errorHandler.js
-│
-└── mqtt/
-└── mqttSubscriber.js
+├── .env                       # real 
+├── .env.example               # sample env 
+├── .gitignore
+├── package.json
+├── package-lock.json
+├── README.md
+
 ```
 
 
@@ -131,6 +144,18 @@ GET http://localhost:5000/
 GET http://localhost:5000/api/sensor/sensor-01/latest
 
 ```
+```
+Sample output:
+{
+    "deviceId": "sensor-01",
+    "temperature": 32.5,
+    "deviceTimestamp": 1769711573487,
+    "createdAt": "2026-01-29T18:32:53.496Z",
+    "updatedAt": "2026-01-29T18:32:53.496Z",
+    "__v": 0,
+    "id": "697ba7d5213f8a4744ddb87d"
+}
+```
 
 ### POST/
 ``` bash
@@ -141,5 +166,19 @@ body
 {
   "deviceId": "sensor-00",
   "temperature": 00
+}
+```
+```
+Sample output:
+{
+    "message": "Sensor data ingested successfully",
+    "data": {
+        "deviceId": "sensor-00",
+        "temperature": 34,
+        "deviceTimestamp": 1770703622774,
+        "createdAt": "2026-02-10T06:07:02.782Z",
+        "updatedAt": "2026-02-10T06:07:02.782Z",
+        "id": "698acb06d1363d70644c72b3"
+    }
 }
 ```
