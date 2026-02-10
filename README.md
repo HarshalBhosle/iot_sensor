@@ -8,8 +8,7 @@ This project was built as part of a **Node.js Internship Pre-Assessment Assignme
 
 ## ⬇️ Installation
 
-create a folder with the name and then on cmd of code editor initialize node and install the required dependencies of [node](https://nodejs.org/en).
-
+Create a project directory, navigate into it, and initialize the [Node.js](https://nodejs.org/en) application. Install the required dependencies using npm.
 ```bash
 npm init -y
 npm install express mongoose dotenv cors mqtt
@@ -78,6 +77,32 @@ iot_sensor/
 ├── README.md
 
 ```
+---
+## 🗄️ Database Setup (MongoDB Atlas)
+
+1. Create a MongoDB Atlas account at  
+   https://www.mongodb.com/atlas
+
+2. Create a **Free Tier (M0) cluster**
+
+3. Add a database user:
+   - Username & password
+   - Role: Read and Write
+
+4. Configure Network Access:
+   - Allow IP `0.0.0.0/0` (for development)
+
+5. Get the MongoDB connection string:
+   - mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/iot_db
+   
+6. Create a `.env` file in the project root:
+```env
+PORT=5000
+MONGO_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/iot_db
+MQTT_BROKER_URL=mqtt://broker.hivemq.com
+```
+
+
 
 
 ---
@@ -89,17 +114,6 @@ npm run dev
 node src/server.js
 ```
 
----
-
-## ⚙️ Environment Variables
-
-Create a `.env` file in the project root:
-
-```env
-PORT=5000
-MONGO_URI=your_mongodb_atlas_connection_string
-MQTT_BROKER_URL=mqtt://broker.hivemq.com
-```
 ---
 
 ## 🤖 MQTT setup
@@ -127,7 +141,7 @@ MQTT_BROKER_URL=mqtt://broker.hivemq.com
 - Click CONNECT
 
 ### after connected 
-- topic - iot/sensor/sendor-id/temperature
+- topic - iot/sensor/sensor-99/temperature
 - message - 36.1
 
 ---
@@ -141,7 +155,7 @@ http://localhost:5000
 request
 ```bash 
 GET http://localhost:5000/
-GET http://localhost:5000/api/sensor/sensor-01/latest
+GET http://localhost:5000/api/sensor/:deviceId/latest
 
 ```
 ```
@@ -158,16 +172,22 @@ Sample output:
 ```
 
 ### POST/
+POST
 ``` bash
 POST http://localhost:5000/api/sensor/ingest
+```
+Header
+```bash
+Content-Type: application/json
 ```
 body
 ```bash
 {
-  "deviceId": "sensor-00",
-  "temperature": 00
+  "deviceId": "sensor-01",
+  "temperature": 35.1
 }
 ```
+<<<<<<< HEAD
 ```
 Sample output:
 {
@@ -182,3 +202,72 @@ Sample output:
     }
 }
 ```
+=======
+### Expected Response ([postman](https://www.postman.com/))
+
+#### GET
+```bash
+http://localhost:5000/api/sensor/:deviceId/latest
+```
+```bash
+{
+  "_id": "...",
+  "deviceId": "sensor-01",
+  "temperature": 32.5,
+  "deviceTimestamp": 1700000000000,
+  "createdAt": "...",
+  "updatedAt": "..."
+}
+```
+---
+## Postman Examples
+```bash
+GET http://localhost:5100/
+```
+response:
+```bash
+IoT Sensor API is running
+```
+---
+
+```bash
+POST http://localhost:5100/api/sensor/ingest
+```
+body
+```bash
+{
+  "temperature": 50,
+  "deviceId": "sensor-04"
+}
+```
+response:
+```bash
+{
+    "message": "Sensor data ingested successfully",
+    "data": {
+        "deviceId": "sensor-04",
+        "temperature": 50,
+        "deviceTimestamp": 1769713543165,
+        "createdAt": "2026-01-29T19:05:43.175Z",
+        "updatedAt": "2026-01-29T19:05:43.175Z",
+        "id": "697baf874ed98aa835714562"
+    }
+}
+```
+---
+```bash
+GET http://localhost:5100/api/sensor/sensor-98/latest
+```
+response:
+```bash
+{
+    "deviceId": "sensor-98",
+    "temperature": 44,
+    "deviceTimestamp": 1769713578920,
+    "createdAt": "2026-01-29T19:06:18.921Z",
+    "updatedAt": "2026-01-29T19:06:18.921Z",
+    "id": "697bafaa4ed98aa835714566"
+}
+```
+
+>>>>>>> bb98dfef1745992c7fcf1247f71e2cdeced23be3
