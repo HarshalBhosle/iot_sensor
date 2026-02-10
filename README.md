@@ -269,5 +269,3 @@ response:
     "id": "697bafaa4ed98aa835714566"
 }
 ```
-
->>>>>>> bb98dfef1745992c7fcf1247f71e2cdeced23be3
