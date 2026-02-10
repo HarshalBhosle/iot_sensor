@@ -187,7 +187,6 @@ body
   "temperature": 35.1
 }
 ```
-<<<<<<< HEAD
 ```
 Sample output:
 {
